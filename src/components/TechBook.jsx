@@ -1,4 +1,4 @@
-export const TechBook = ({techBook, handleDeleteTechBook}) => {
+export const TechBook = ({ techBook, techBooksDispatch }) => {
 	return (
 		<div className="techBook">
 			<img
@@ -9,7 +9,26 @@ export const TechBook = ({techBook, handleDeleteTechBook}) => {
 				<div className="title">{techBook.title}</div>
 				<div className="description">{techBook.description}</div>
 				<div className="buttonArea">
-					<button onClick={() => handleDeleteTechBook(techBook)}>Delete</button>
+					<button
+						onClick={() =>
+							techBooksDispatch({
+								type: 'delete',
+								payload: { techBook },
+							})
+						}
+					>
+						Delete
+					</button>
+					<button
+						onClick={() =>
+							techBooksDispatch({
+								type: 'markFinished',
+								payload: { techBook },
+							})
+						}
+					>
+						Mark Finished
+					</button>
 				</div>
 			</div>
 		</div>

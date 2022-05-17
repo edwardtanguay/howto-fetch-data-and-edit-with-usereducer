@@ -6,25 +6,27 @@ const techBooksUrl = 'https://edwardtanguay.netlify.app/share/techBooks.json';
 const reducer = (techBooks, action) => {
 	switch (action.type) {
 		case 'load':
-			return [...action.payload]
+			return [...action.payload];
+		case 'markFinished':
+			action.payload.techBook.title += ' -- FINISHED';
+			return [...techBooks];
+		case 'delete':
+			const _techBooks = techBooks.filter(
+				(m) => m.id !== action.payload.techBook.id
+			);
+			return _techBooks;
 	}
 };
 
 export const PageBooks = () => {
-	const [techBooks, dispatch] = useReducer(reducer, []);
+	const [techBooks, techBooksDispatch] = useReducer(reducer, []);
 
-	const handleDeleteTechBook = (techBook) => {
-		// const _techBooks = techBooks.filter(m => m.id !== techBook.id);
-		// setTechBooks(_techBooks);
-		console.log('deleting techBook with id ' + techBook.id);
-	}
 
 	useEffect(() => {
 		(async () => {
 			const response = await fetch(techBooksUrl);
 			const _techBooks = await response.json();
-			// setTechBooks(_techBooks);
-			dispatch({ type: 'load', payload: _techBooks });
+			techBooksDispatch({ type: 'load', payload: _techBooks });
 		})();
 	}, []);
 
@@ -32,7 +34,7 @@ export const PageBooks = () => {
 		<div className="page_books">
 			<h2>Tech Books</h2>
 			<p>I have following {techBooks.length} tech books:</p>
-			<TechBooks techBooks={techBooks} handleDeleteTechBook={handleDeleteTechBook} />
+			<TechBooks techBooks={techBooks} techBooksDispatch={techBooksDispatch} />
 		</div>
 	);
 };
