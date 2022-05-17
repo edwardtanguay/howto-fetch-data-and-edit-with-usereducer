@@ -19,14 +19,13 @@ const reducer = (techBooks, action) => {
 };
 
 export const PageBooks = () => {
-	const [techBooks, techBooksDispatch] = useReducer(reducer, []);
-
+	const [techBooks, dispatchTechBooks] = useReducer(reducer, []);
 
 	useEffect(() => {
 		(async () => {
 			const response = await fetch(techBooksUrl);
 			const _techBooks = await response.json();
-			techBooksDispatch({ type: 'load', payload: _techBooks });
+			dispatchTechBooks({ type: 'load', payload: _techBooks });
 		})();
 	}, []);
 
@@ -34,7 +33,10 @@ export const PageBooks = () => {
 		<div className="page_books">
 			<h2>Tech Books</h2>
 			<p>I have following {techBooks.length} tech books:</p>
-			<TechBooks techBooks={techBooks} techBooksDispatch={techBooksDispatch} />
+			<TechBooks
+				techBooks={techBooks}
+				dispatchTechBooks={dispatchTechBooks}
+			/>
 		</div>
 	);
 };

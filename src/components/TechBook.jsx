@@ -1,4 +1,4 @@
-export const TechBook = ({ techBook, techBooksDispatch }) => {
+export const TechBook = ({ techBook, dispatchTechBooks }) => {
 	return (
 		<div className="techBook">
 			<img
@@ -11,7 +11,7 @@ export const TechBook = ({ techBook, techBooksDispatch }) => {
 				<div className="buttonArea">
 					<button
 						onClick={() =>
-							techBooksDispatch({
+							dispatchTechBooks({
 								type: 'delete',
 								payload: { techBook },
 							})
@@ -21,7 +21,7 @@ export const TechBook = ({ techBook, techBooksDispatch }) => {
 					</button>
 					<button
 						onClick={() =>
-							techBooksDispatch({
+							dispatchTechBooks({
 								type: 'markFinished',
 								payload: { techBook },
 							})
